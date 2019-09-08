@@ -1,0 +1,70 @@
+env:
+  global:
+    - sourceTGZ_318="https://gb1.androidfilehost.com/dl/SyG-6d0V6C0eoklESBTHYQ/1568197303/1899786940962580022/kernel-3.18.tar.gz"
+    - sourceTGZ_44="https://va2.androidfilehost.com/dl/NFyPG_W-1Istwtoo-XIJfw/1568197314/1899786940962580019/kernel-4.4.tar.gz"
+    - sourceTGZ_49="https://va2.androidfilehost.com/dl/nJPJNbmTFOIRZukniqSxTA/1568197314/1899786940962580018/kernel-4.9-lc.tar.gz"
+    - originRepo="https://github.com/rokibhasansagar/alps-mp-p0.mp2_kernels.git"
+    - originRepoSlug="rokibhasansagar/alps-mp-p0.mp2_kernels"
+os: linux
+dist: xenial
+sudo: required
+git:
+  depth: 3
+addons:
+  apt:
+    update:
+    - true
+install: true
+script:
+  - "travis_wait 30 sleep 2400 &"
+  - git config --global user.email ${GitHubMail}
+  - git config --global user.name ${GitHubName}
+  - git config --global color.ui true
+  - mkdir working && cd working/
+  - wget -q ${sourceTGZ_318} -O k318.tar.gz
+  - tar -xzvf k318.tar.gz 1 >../k318.log 2>&1
+  - rm k318.tar.gz
+  - cd kernel-3.18/
+  - git init
+  - git remote add upstream ${originRepo}
+  - git add -A .
+  - git commit -m "Initializing alps-mp-p0.mp2_kernel for android-3.18 branch"
+  - git branch --track -f master
+  - git push --force https://${GitOAUTHToken2}@github.com/${originRepoSlug}.git HEAD:android-3.18
+  - rm -rf kernel-3.18
+  - cd ../
+  - wget -q ${sourceTGZ_44} -O k44.tar.gz
+  - tar -xzvf k44.tar.gz 1 >../k44.log 2>&1
+  - rm k44.tar.gz
+  - cd kernel-4.4
+  - git init
+  - git remote add upstream ${originRepo}
+  - git add -A .
+  - git commit -m "Initializing alps-mp-p0.mp2_kernel for android-4.4 branch"
+  - git branch --track -f master
+  - git push --force https://${GitOAUTHToken2}@github.com/${originRepoSlug}.git HEAD:android-4.4
+  - rm -rf kernel-4.4
+  - cd ../
+  - wget -q ${sourceTGZ_49} -O k49.tar.gz
+  - tar -xzvf k349tar.gz 1 >../k49.log 2>&1
+  - rm k49.tar.gz
+  - cd kernel-4.9-lc
+  - git init
+  - git remote add upstream ${originRepo}
+  - git add -A .
+  - git commit -m "Initializing alps-mp-p0.mp2_kernel for android-4.9 branch"
+  - git branch --track -f master
+  - git push --force https://${GitOAUTHToken2}@github.com/${originRepoSlug}.git HEAD:android-4.9
+  - rm -rf kernel-4.9-lc
+  - cd ../
+  - curl --progress-bar --upload-file k318.log https://transfer.sh/
+  - curl --progress-bar --upload-file k44.log https://transfer.sh/
+  - curl --progress-bar --upload-file k49.log https://transfer.sh/
+  - cd ../
+branches:
+  only:
+  - master
+notifications:
+  email:
+    on_success: never
+    on_failure: always

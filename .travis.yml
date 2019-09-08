@@ -28,9 +28,9 @@ script:
   - git init
   - git remote add upstream ${originRepo}
   - git add -A .
-  - git commit -m "Initializing alps-mp-p0.mp2_kernel for android-3.18 branch"
+  - git commit -q -m "Initializing alps-mp-p0.mp2_kernel for android-3.18 branch"
   - git branch --track -f master
-  - git push --force https://${GitOAUTHToken2}@github.com/${originRepoSlug}.git HEAD:android-3.18
+  - git push -q --force https://${GitOAUTHToken2}@github.com/${originRepoSlug}.git HEAD:android-3.18
   - rm -rf kernel-3.18
   - cd ../
   - wget -q ${sourceTGZ_44} -O k44.tar.gz
@@ -40,9 +40,9 @@ script:
   - git init
   - git remote add upstream ${originRepo}
   - git add -A .
-  - git commit -m "Initializing alps-mp-p0.mp2_kernel for android-4.4 branch"
+  - git commit -q -m "Initializing alps-mp-p0.mp2_kernel for android-4.4 branch"
   - git branch --track -f master
-  - git push --force https://${GitOAUTHToken2}@github.com/${originRepoSlug}.git HEAD:android-4.4
+  - git push -q --force https://${GitOAUTHToken2}@github.com/${originRepoSlug}.git HEAD:android-4.4
   - rm -rf kernel-4.4
   - cd ../
   - wget -q ${sourceTGZ_49} -O k49.tar.gz
@@ -52,14 +52,14 @@ script:
   - git init
   - git remote add upstream ${originRepo}
   - git add -A .
-  - git commit -m "Initializing alps-mp-p0.mp2_kernel for android-4.9 branch"
+  - git commit -q -m "Initializing alps-mp-p0.mp2_kernel for android-4.9 branch"
   - git branch --track -f master
-  - git push --force https://${GitOAUTHToken2}@github.com/${originRepoSlug}.git HEAD:android-4.9
+  - git push -q --force https://${GitOAUTHToken2}@github.com/${originRepoSlug}.git HEAD:android-4.9
   - rm -rf kernel-4.9-lc
   - cd ../
-  - curl --progress-bar --upload-file k318.log https://transfer.sh/
-  - curl --progress-bar --upload-file k44.log https://transfer.sh/
-  - curl --progress-bar --upload-file k49.log https://transfer.sh/
+  - tar -cJf logs.tar.xz *.log
+  - curl --progress-bar --upload-file logs.tar.xz https://transfer.sh/
+  - rm logs.tar.xz
   - cd ../
 branches:
   only:

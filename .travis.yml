@@ -21,45 +21,38 @@ script:
   - git config --global user.name ${GitHubName}
   - git config --global color.ui true
   - mkdir working && cd working/
-  - wget -q ${sourceTGZ_318} -O k318.tar.gz
-  - tar -xzvf k318.tar.gz &> ../k318.log
-  - rm k318.tar.gz
+  - wget -q ${sourceTGZ_318}
+  - wget -q ${sourceTGZ_44}
+  - wget -q ${sourceTGZ_49}
+  - tar -xzf kernel-3.18.tar.gz
+  - rm kernel-3.18.tar.gz
   - cd kernel-3.18/
   - git init
   - git remote add upstream ${originRepo}
   - git add -A .
   - git commit -q -m "Initializing alps-mp-p0.mp2_kernel for android-3.18 branch"
-  - git branch --track -f master
   - git push -q --force https://${GitOAUTHToken2}@github.com/${originRepoSlug}.git HEAD:android-3.18
   - rm -rf kernel-3.18
   - cd ../
-  - wget -q ${sourceTGZ_44} -O k44.tar.gz
-  - tar -xzvf k44.tar.gz &> ../k44.log
-  - rm k44.tar.gz
+  - tar -xzf kernel-4.4.tar.gz
+  - rm kernel-4.4.tar.gz
   - cd kernel-4.4
   - git init
   - git remote add upstream ${originRepo}
   - git add -A .
   - git commit -q -m "Initializing alps-mp-p0.mp2_kernel for android-4.4 branch"
-  - git branch --track -f master
   - git push -q --force https://${GitOAUTHToken2}@github.com/${originRepoSlug}.git HEAD:android-4.4
   - rm -rf kernel-4.4
   - cd ../
-  - wget -q ${sourceTGZ_49} -O k49.tar.gz
-  - tar -xzvf k349tar.gz &> ../k49.log
-  - rm k49.tar.gz
+  - tar -xzf kernel-4.9-lc.tar.gz
+  - rm kernel-4.9-lc.tar.gz
   - cd kernel-4.9-lc
   - git init
   - git remote add upstream ${originRepo}
   - git add -A .
   - git commit -q -m "Initializing alps-mp-p0.mp2_kernel for android-4.9 branch"
-  - git branch --track -f master
   - git push -q --force https://${GitOAUTHToken2}@github.com/${originRepoSlug}.git HEAD:android-4.9
   - rm -rf kernel-4.9-lc
-  - cd ../
-  - tar -cJf logs.tar.xz *.log
-  - curl --progress-bar --upload-file logs.tar.xz https://transfer.sh/
-  - rm logs.tar.xz
   - cd ../
 branches:
   only:

@@ -1,0 +1,14 @@
+config MTK_FD_LEAK_DETECT
+	bool "Enable MTK fd leak detection"
+	default y
+	help
+	  detect kernel fd leak.
+
+config MTK_FD_LEAK_SPECIFIC_DEBUG
+	bool "Specific demand in fd leak debug"
+	default n
+	help
+	  Specific demand in fd leak debug.
+	  Eg,
+	  For some specific processes, may need backtrace, coredump
+	  and other debug information.
